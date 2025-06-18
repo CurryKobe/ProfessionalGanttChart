@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import Header from './components/Header';
 import ProjectForm from './components/ProjectForm';
 import ProjectStats from './components/ProjectStats';
@@ -216,6 +217,7 @@ function App() {
         cancelText={t('modal.delete.cancel')}
         danger={true}
       />
+      <Analytics />
     </div>
   );
 }
