@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>移动端适配测试</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9fafb;
+        }
+        
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .test-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .test-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #111827;
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .test-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        
+        .test-button {
+            background: #4f8cff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+            min-height: 44px;
+            min-width: 44px;
+        }
+        
+        .test-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 16px;
+            margin: 5px 0;
+        }
+        
+        .responsive-text {
+            font-size: 14px;
+        }
+        
+        @media (min-width: 640px) {
+            .responsive-text {
+                font-size: 16px;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .responsive-text {
+                font-size: 18px;
+            }
+        }
+        
+        .mobile-info {
+            background: #dbeafe;
+            border: 1px solid #93c5fd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .info-title {
+            font-weight: 600;
+            color: #1e40af;
+            margin-bottom: 10px;
+        }
+        
+        .info-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .info-list li {
+            margin-bottom: 5px;
+            color: #1e3a8a;
+        }
+        
+        .info-list li:before {
+            content: "✓ ";
+            color: #059669;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="mobile-info">
+            <div class="info-title">移动端适配改进清单</div>
+            <ul class="info-list">
+                <li>响应式布局设计 - 使用移动优先的方法</li>
+                <li>触摸友好的按钮尺寸 - 最小44px触摸目标</li>
+                <li>移动端优化的表单控件 - 防止iOS缩放</li>
+                <li>甘特图移动端显示优化 - 自适应列宽</li>
+                <li>下拉菜单移动端交互改进 - 点击而非悬停</li>
+                <li>移动端特定的间距和字体大小</li>
+                <li>防止水平滚动的布局优化</li>
+                <li>移动端优化的滚动体验</li>
+            </ul>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">响应式文本测试</div>
+            <p class="responsive-text">
+                这是一个响应式文本示例。在小屏幕上字体较小，在大屏幕上字体较大。
+                当前屏幕宽度: <span id="screen-width"></span>px
+            </p>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">触摸友好的按钮测试</div>
+            <div class="test-grid">
+                <div class="test-card">
+                    <h3>标准按钮</h3>
+                    <button class="test-button">点击我</button>
+                    <button class="test-button">另一个按钮</button>
+                </div>
+                <div class="test-card">
+                    <h3>图标按钮</h3>
+                    <button class="test-button">📱</button>
+                    <button class="test-button">⚙️</button>
+                    <button class="test-button">💾</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">移动端优化的表单测试</div>
+            <div class="test-grid">
+                <div class="test-card">
+                    <h3>文本输入</h3>
+                    <input type="text" class="test-input" placeholder="输入项目名称">
+                    <input type="email" class="test-input" placeholder="输入邮箱地址">
+                </div>
+                <div class="test-card">
+                    <h3>日期选择</h3>
+                    <input type="date" class="test-input">
+                    <input type="time" class="test-input">
+                </div>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">响应式网格测试</div>
+            <div class="test-grid">
+                <div class="test-card">
+                    <h3>卡片 1</h3>
+                    <p>这个卡片会根据屏幕大小自动调整布局。</p>
+                </div>
+                <div class="test-card">
+                    <h3>卡片 2</h3>
+                    <p>在移动端会堆叠显示，在桌面端会并排显示。</p>
+                </div>
+                <div class="test-card">
+                    <h3>卡片 3</h3>
+                    <p>使用CSS Grid的auto-fit功能实现响应式布局。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 显示当前屏幕宽度
+        function updateScreenWidth() {
+            document.getElementById('screen-width').textContent = window.innerWidth;
+        }
+        
+        updateScreenWidth();
+        window.addEventListener('resize', updateScreenWidth);
+        
+        // 添加一些交互效果
+        document.querySelectorAll('.test-button').forEach(button => {
+            button.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 150);
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -25,43 +25,25 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-xl max-w-md w-full mx-4 p-6">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-3">
-            <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-              danger ? 'bg-red-100' : 'bg-yellow-100'
-            }`}>
-              <AlertTriangle className={`w-4 h-4 ${
-                danger ? 'text-red-600' : 'text-yellow-600'
-              }`} />
-            </div>
-            <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-2xl max-w-md w-full mobile-padding shadow-2xl text-center">
+        <div className="flex flex-col items-center gap-4 mb-4">
+          <div className={`w-14 h-14 rounded-full flex items-center justify-center ${danger ? 'bg-red-100' : 'bg-yellow-100'}`}>
+            <AlertTriangle className={`w-8 h-8 ${danger ? 'text-red-600' : 'text-yellow-600'}`} />
           </div>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <h3 className="mobile-heading font-semibold text-gray-800">{title}</h3>
         </div>
-        
-        <p className="text-gray-600 mb-6">{message}</p>
-        
-        <div className="flex gap-3 justify-end">
+        <p className="text-gray-600 mb-8 mobile-text">{message}</p>
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <button
             onClick={onClose}
-            className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+            className="btn btn-secondary"
           >
             {cancelText}
           </button>
           <button
             onClick={onConfirm}
-            className={`px-4 py-2 rounded-lg transition-colors font-medium ${
-              danger
-                ? 'bg-red-600 text-white hover:bg-red-700'
-                : 'bg-blue-600 text-white hover:bg-blue-700'
-            }`}
+            className={`btn ${danger ? 'btn-danger' : 'btn-primary'}`}
           >
             {confirmText}
           </button>

@@ -21,6 +21,9 @@ export const translations: Translations = {
     'stats.unscheduled': 'Unscheduled',
     
     // Actions
+    'actions.export': 'Export',
+    'actions.import': 'Import',
+    'actions.clear': 'Clear',
     'actions.exportJson': 'Export JSON',
     'actions.importJson': 'Import JSON',
     'actions.clearAll': 'Clear All',
@@ -71,6 +74,7 @@ export const translations: Translations = {
     'modal.delete.confirm': 'Delete',
     'modal.delete.cancel': 'Cancel',
     'modal.clearAll.message': 'Are you sure you want to clear all projects? This action cannot be undone.',
+    'modal.clearAll.title': 'Clear All Projects',
     
     // Import/Export
     'import.noProjects': 'No projects to export',
@@ -81,7 +85,8 @@ export const translations: Translations = {
     'export.error': 'Failed to export image. Please try again.',
     
     // Footer
-    'footer.text': 'Professional Gantt Chart Tool © 2025 | Built with modern web technologies',
+    'footer.text': 'Professional Gantt Chart Tool © 2025 | Built with modern web technology',
+    'footer.contact': 'Contact me',
     
     // SEO Content
     'seo.features.title': 'Key Features',
@@ -116,6 +121,9 @@ export const translations: Translations = {
     'stats.unscheduled': '未排期',
     
     // Actions
+    'actions.export': '导出',
+    'actions.import': '导入',
+    'actions.clear': '清空',
     'actions.exportJson': '导出JSON',
     'actions.importJson': '导入JSON',
     'actions.clearAll': '清空全部',
@@ -166,6 +174,7 @@ export const translations: Translations = {
     'modal.delete.confirm': '删除',
     'modal.delete.cancel': '取消',
     'modal.clearAll.message': '确定要清空所有项目吗？此操作无法撤销。',
+    'modal.clearAll.title': '清空全部项目',
     
     // Import/Export
     'import.noProjects': '没有项目可导出',
@@ -177,6 +186,7 @@ export const translations: Translations = {
     
     // Footer
     'footer.text': '专业甘特图工具 © 2025 | 使用现代网络技术构建',
+    'footer.contact': '联系我',
     
     // SEO Content
     'seo.features.title': '主要功能',

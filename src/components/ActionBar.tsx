@@ -2,6 +2,8 @@ import React from 'react';
 import { Trash2, Download, Upload, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react';
 import { Project } from '../types';
 import { exportToJSON, importFromJSON } from '../utils/exportUtils';
+import ConfirmModal from './ConfirmModal';
+import Toast from './Toast';
 
 interface ActionBarProps {
   projects: Project[];
@@ -20,6 +22,12 @@ const ActionBar: React.FC<ActionBarProps> = ({
   onZoomChange,
   t
 }) => {
+  const [showConfirm, setShowConfirm] = React.useState(false);
+  const [importedProjects, setImportedProjects] = React.useState<Project[] | null>(null);
+  const [showImportReplaceModal, setShowImportReplaceModal] = React.useState(false);
+  const [showImportAppendModal, setShowImportAppendModal] = React.useState(false);
+  const [showToast, setShowToast] = React.useState(false);
+
   const handleExportJSON = () => {
     if (projects.length === 0) {
       alert(t('import.noProjects'));
@@ -38,21 +46,14 @@ const ActionBar: React.FC<ActionBarProps> = ({
       if (!file) return;
 
       try {
-        const importedProjects = await importFromJSON(file);
-        
+        const imported = await importFromJSON(file);
         if (projects.length > 0) {
-          const shouldReplace = confirm(t('import.replaceConfirm'));
-          if (!shouldReplace) {
-            const shouldAppend = confirm(t('import.appendConfirm'));
-            if (shouldAppend) {
-              onImportProjects([...projects, ...importedProjects]);
-            }
-            return;
-          }
+          setImportedProjects(imported);
+          setShowImportReplaceModal(true);
+          return;
         }
-        
-        onImportProjects(importedProjects);
-        alert(t('import.success'));
+        onImportProjects(imported);
+        setShowToast(true);
       } catch (error) {
         alert(t('import.error'));
         console.error('Import error:', error);
@@ -64,10 +65,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
 
   const handleClearAll = () => {
     if (projects.length === 0) return;
-    
-    if (confirm(t('modal.clearAll.message'))) {
-      onClearAll();
-    }
+    setShowConfirm(true);
   };
 
   const handleZoomIn = () => {
@@ -86,63 +84,126 @@ const ActionBar: React.FC<ActionBarProps> = ({
     onZoomChange(1);
   };
 
+  React.useEffect(() => {
+    if (!showImportReplaceModal && importedProjects) {
+      setTimeout(() => setShowImportAppendModal(true), 0);
+    }
+    // eslint-disable-next-line
+  }, [showImportReplaceModal]);
+
+  React.useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => setShowToast(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showToast]);
+
   return (
-    <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-      <div className="flex flex-wrap gap-3">
+    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mobile-gap mb-4 sm:mb-6">
+      <div className="flex flex-wrap gap-2 sm:gap-3">
         <button
           onClick={handleExportJSON}
           disabled={projects.length === 0}
-          className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn btn-secondary disabled:opacity-50 disabled:cursor-not-allowed mobile-text"
         >
-          <Download className="w-4 h-4" />
-          {t('actions.exportJson')}
+          <Download className="w-5 h-5 mr-2" />
+          <span>{t('actions.exportJson')}</span>
         </button>
         
         <button
           onClick={handleImportJSON}
-          className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium"
+          className="btn btn-secondary mobile-text"
         >
-          <Upload className="w-4 h-4" />
-          {t('actions.importJson')}
+          <Upload className="w-5 h-5 mr-2" />
+          <span>{t('actions.importJson')}</span>
         </button>
         
         <button
           onClick={handleClearAll}
           disabled={projects.length === 0}
-          className="flex items-center gap-2 px-4 py-2 border border-red-300 text-red-600 rounded-lg hover:bg-red-50 transition-colors text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn btn-danger disabled:opacity-50 disabled:cursor-not-allowed mobile-text"
         >
-          <Trash2 className="w-4 h-4" />
-          {t('actions.clearAll')}
+          <Trash2 className="w-5 h-5 mr-2" />
+          <span>{t('actions.clearAll')}</span>
         </button>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center justify-center gap-2">
         <button
           onClick={handleZoomOut}
           disabled={zoom <= 0.5}
-          className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn-icon disabled:opacity-50 disabled:cursor-not-allowed"
           title={t('actions.zoomOut')}
         >
-          <ZoomOut className="w-4 h-4" />
+          <ZoomOut className="w-5 h-5" />
         </button>
         
         <button
           onClick={handleZoomReset}
-          className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
+          className="btn-icon"
           title={t('actions.zoomReset')}
         >
-          <RotateCcw className="w-4 h-4" />
+          <RotateCcw className="w-5 h-5" />
         </button>
         
         <button
           onClick={handleZoomIn}
           disabled={zoom >= 2}
-          className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn-icon disabled:opacity-50 disabled:cursor-not-allowed"
           title={t('actions.zoomIn')}
         >
-          <ZoomIn className="w-4 h-4" />
+          <ZoomIn className="w-5 h-5" />
         </button>
       </div>
+
+      <ConfirmModal
+        isOpen={showConfirm}
+        onClose={() => setShowConfirm(false)}
+        onConfirm={() => { setShowConfirm(false); onClearAll(); }}
+        title={t('modal.clearAll.title') || t('actions.clearAll')}
+        message={t('modal.clearAll.message')}
+        confirmText={t('modal.delete.confirm')}
+        cancelText={t('modal.delete.cancel')}
+        danger={true}
+      />
+
+      <ConfirmModal
+        isOpen={showImportReplaceModal}
+        onClose={() => { setShowImportReplaceModal(false); setImportedProjects(null); }}
+        onConfirm={() => {
+          if (importedProjects) {
+            onImportProjects(importedProjects);
+            setImportedProjects(null);
+            setShowImportReplaceModal(false);
+            setShowToast(true);
+          }
+        }}
+        title={t('import.replaceConfirm')}
+        message={t('import.replaceConfirm')}
+        confirmText={t('modal.delete.confirm')}
+        cancelText={t('modal.delete.cancel')}
+        danger={true}
+      />
+
+      <ConfirmModal
+        isOpen={showImportAppendModal}
+        onClose={() => { setShowImportAppendModal(false); setImportedProjects(null); }}
+        onConfirm={() => {
+          if (importedProjects) {
+            onImportProjects([...projects, ...importedProjects]);
+            setImportedProjects(null);
+            setShowImportAppendModal(false);
+            setShowToast(true);
+          }
+        }}
+        title={t('import.appendConfirm')}
+        message={t('import.appendConfirm')}
+        confirmText={t('modal.delete.confirm')}
+        cancelText={t('modal.delete.cancel')}
+        danger={false}
+      />
+
+      <Toast show={showToast} message={t('import.success')} />
     </div>
   );
 };

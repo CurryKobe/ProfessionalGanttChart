@@ -195,6 +195,10 @@ const SEOContent: React.FC<SEOContentProps> = ({ t }) => {
             </p>
           </div>
         </div>
+        <div className="mt-10 text-center text-gray-500 text-sm">
+          <span>{t('footer.contact')}：</span>
+          <a href="mailto:vairfly@gmail.com" className="text-blue-600 hover:underline font-medium">vairfly@gmail.com</a>
+        </div>
       </section>
     </div>
   );

@@ -139,3 +139,26 @@ export const getProjectPosition = (
   
   return { left, width };
 };
+
+// Mobile utility functions
+export const isMobile = (): boolean => {
+  return window.innerWidth < 768;
+};
+
+export const isTablet = (): boolean => {
+  return window.innerWidth >= 768 && window.innerWidth < 1024;
+};
+
+export const isDesktop = (): boolean => {
+  return window.innerWidth >= 1024;
+};
+
+export const getMobileColumnWidth = (viewMode: string, zoom: number): number => {
+  const isMobileDevice = isMobile();
+  const baseWidth = viewMode === 'day' 
+    ? (isMobileDevice ? 40 : 60) 
+    : viewMode === 'week' 
+    ? (isMobileDevice ? 80 : 120) 
+    : (isMobileDevice ? 120 : 180);
+  return Math.max(baseWidth * zoom, baseWidth * 0.7);
+};

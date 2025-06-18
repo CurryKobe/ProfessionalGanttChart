@@ -10,7 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vercel/analytics": "^1.5.0",
+    "antd": "^5.26.1",
     "date-fns": "^3.6.0",
+    "dayjs": "^1.11.13",
     "html2canvas": "^1.4.1",
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
