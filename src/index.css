@@ -284,8 +284,13 @@ textarea:focus-visible {
 }
 .ant-picker-dropdown {
   border-radius: 1.25rem !important;
-  box-shadow: 0 8px 32px 0 rgba(79,140,255,0.18) !important;
+  box-shadow: 0 4px 24px 0 rgba(79,140,255,0.08) !important;
+  border: 1.5px solid #e0e7ef !important;
+  background: #fff !important;
   overflow: hidden;
+  width: auto !important;
+  min-width: unset !important;
+  max-width: 320px !important;
 }
 .ant-picker-panel {
   border-radius: 1.25rem !important;
